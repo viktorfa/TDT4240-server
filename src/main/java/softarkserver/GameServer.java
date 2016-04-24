@@ -1,11 +1,8 @@
 package softarkserver;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,7 +34,7 @@ public class GameServer extends Listener {
 			kryo.register(String.class);
 			server.addListener(this);
 		
-			System.out.println("Server started.");
+			System.out.println(String.format("Server started on port %d.", TCP_PORT));
 			getCmdInput();
 		
 		} catch (IOException e) {
