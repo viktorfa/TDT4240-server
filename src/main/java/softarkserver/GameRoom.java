@@ -8,8 +8,10 @@ import java.util.concurrent.TimeUnit;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONString;
 
 import com.esotericsoftware.kryonet.Connection;
+import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
 
 
 public class GameRoom {
@@ -305,17 +307,18 @@ public class GameRoom {
 				players.remove(player);
 				if(players.size() <= 0){
 					gameFinished = true;
+				} else {
+					JSONObject playerLeaveGameRoomJsn = new JSONObject();
+					playerLeaveGameRoomJsn.put("type", "playerLeftGameRoom");
+					if(player.getPlayerName().equals(roomowner.getPlayerName())){
+						playerLeaveGameRoomJsn.put("name", "host");
+						roomowner = players.get(0);
+						playerLeaveGameRoomJsn.put("newHost", roomowner.getPlayerName());
+					}
+					playerLeaveGameRoomJsn.put("name", player.getPlayerName());
+					
+					bcast(playerLeaveGameRoomJsn.toString());
 				}
-				JSONObject playerLeaveGameRoomJsn = new JSONObject();
-				playerLeaveGameRoomJsn.put("type", "playerLeftGameRoom");
-				if(player.getPlayerName().equals(roomowner.getPlayerName())){
-					playerLeaveGameRoomJsn.put("name", "host");
-					roomowner = players.get(0);
-					playerLeaveGameRoomJsn.put("newHost", roomowner.getPlayerName());
-				}
-				playerLeaveGameRoomJsn.put("name", player.getPlayerName());
-				
-				bcast(playerLeaveGameRoomJsn.toString());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

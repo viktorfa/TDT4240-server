@@ -55,7 +55,9 @@ public class GamesManager {
 			String gamePinString = jsn.getString("gamePin");
 			if(!gamePinString.isEmpty()){
 				int gamePin = Integer.parseInt(gamePinString);
-				gameRooms.get(gamePin).rdyToStartGameBCAst();
+				if(gameRooms.containsKey(gamePin)){
+					gameRooms.get(gamePin).rdyToStartGameBCAst();
+				}
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
