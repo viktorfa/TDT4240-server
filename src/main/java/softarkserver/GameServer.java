@@ -46,7 +46,9 @@ public class GameServer extends Listener {
 	@Override
 	public void received(Connection connection, Object object) {
 		super.received(connection, object);
-	
+		System.out.println("Connection received:");
+		System.out.println(connection);
+
 		if(object instanceof String){
 			try {
 				JSONObject requestJson = new JSONObject((String)object);
